@@ -127,7 +127,11 @@ def determine_rounded_sides_model():
     elif camera_shape == "Two circle cameras in a square module":
         return "iPhone 11"
     else:  # Three circle cameras in a square module
-        return "iPhone 11 Pro or Pro Max"
+        size = ask_multiple_choice_question("Is it large or small?", ["Large", "Small"])
+        if size == "Large":
+            return "iPhone 11 Pro Max"
+        else:
+            return "iPhone 11 Pro"
 
 phone_model = determine_phone_model()
 print("The phone model is:", phone_model)
