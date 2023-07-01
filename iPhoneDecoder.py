@@ -1,4 +1,58 @@
 #TODO: Double check this is accurate
+import tkinter as tk
+from tkinter import messagebox
+
+class PhoneIdentifier:
+    def __init__(self):
+        self.root = tk.Tk()
+        self.root.title("Phone Identifier")
+        self.frame = tk.Frame(self.root)
+        self.frame.pack()
+        self.build_gui()
+        self.root.mainloop()
+
+    def build_gui(self):
+        self.question_label = tk.Label(self.frame, wraplength=300)
+        self.question_label.pack(pady=10)
+        self.option_buttons = []
+        for i in range(4):
+            button = tk.Button(self.frame, state=tk.DISABLED, command=lambda index=i: self.on_option_click(index))
+            button.pack(fill=tk.X, pady=2)
+            self.option_buttons.append(button)
+        self.ask_question()
+
+    def ask_question(self):
+        self.question, self.options = self.get_next_question()
+        self.question_label.config(text=self.question)
+        for i, option in enumerate(self.options):
+            self.option_buttons[i].config(text=option, state=tk.NORMAL)
+        for button in self.option_buttons[len(self.options):]:
+            button.config(state=tk.DISABLED)
+
+    def on_option_click(self, index):
+        self.set_answer(index)
+        if self.is_finished():
+            self.show_result()
+        else:
+            self.ask_question()
+
+    def get_next_question(self):
+        # Modify this method to get the next question and options
+        return "Example question?", ["Option 1", "Option 2", "Option 3"]
+
+    def set_answer(self, index):
+        # Modify this method to store the answer for the chosen option
+        pass
+
+    def is_finished(self):
+        # Modify this method to check if the identification process is finished
+        return False
+
+    def show_result(self):
+        # Modify this method to show the result (phone model)
+        self.question_label.config(text="The phone model is: Example Model")
+        for button in self.option_buttons:
+            button.config(state=tk.DISABLED)
 
 def ask_yes_no_question(question):
     while True:
@@ -132,6 +186,65 @@ def determine_rounded_sides_model():
             return "iPhone 11 Pro Max"
         else:
             return "iPhone 11 Pro"
+        
+        
+# def main():
 
-phone_model = determine_phone_model()
-print("The phone model is:", phone_model)
+#     phone_model = determine_phone_model()
+#     print("The phone model is:", phone_model)
+    
+
+if __name__ == "__main__":
+    PhoneIdentifier()
+
+# def create_window():
+#     window = tk.Tk()
+#     # Add widgets and configure the window here
+#     window.mainloop()
+
+# def ask_yes_no_question(question):
+#     def handle_yes():
+#         window.destroy()
+#         return True
+
+#     def handle_no():
+#         window.destroy()
+#         return False
+
+#     window = tk.Tk()
+#     window.title("Question")
+
+#     label = tk.Label(window, text=question)
+#     label.pack()
+
+#     yes_button = tk.Button(window, text="Yes", command=handle_yes)
+#     yes_button.pack()
+
+#     no_button = tk.Button(window, text="No", command=handle_no)
+#     no_button.pack()
+
+#     window.mainloop()
+
+# def ask_multiple_choice_question(question, options):
+#     def handle_choice():
+#         answer = variable.get()
+#         window.destroy()
+#         return answer
+
+#     window = tk.Tk()
+#     window.title("Question")
+
+#     label = tk.Label(window, text=question)
+#     label.pack()
+
+#     variable = tk.StringVar(window)
+#     variable.set(options[0])  # Set default option
+
+#     option_menu = tk.OptionMenu(window, variable, *options)
+#     option_menu.pack()
+
+#     button = tk.Button(window, text="Submit", command=handle_choice)
+#     button.pack()
+
+#     window.mainloop()
+#     return variable.get()
